@@ -6,7 +6,7 @@ class LoginPage extends StatefulWidget {
   final void Function()? onTap; // función que se ejecuta cuando se presiona el botón
   const LoginPage({super.key, this.onTap}); 
 
-  @override // sobreescribe el método createState de la clase StatefulWidget
+  @override // sobreescribe el metodo createState de la clase StatefulWidget
   State<LoginPage> createState() => _LoginPageState(); // crea un estado de la clase LoginPage, un estado es la información que puede ser leída sincrónicamente y que puede cambiar a lo largo del tiempo
 }
 

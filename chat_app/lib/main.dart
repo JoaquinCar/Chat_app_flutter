@@ -9,8 +9,8 @@ void main() {
 class MyApp extends StatelessWidget { // clase principal de la aplicación
   const MyApp({super.key}); // constructor de la clase, se le pasa la clave key que es un identificador único
 
-  @override // sobreescribe el método build de la clase StatelessWidget
-  Widget build(BuildContext context) { // método que construye la interfaz de la aplicación, build recibe un contexto de tipo BuildContext
+  @override // sobreescribe el metodo build de la clase StatelessWidget
+  Widget build(BuildContext context) { // metodo que construye la interfaz de la aplicación, build recibe un contexto de tipo BuildContext
     return MaterialApp(
       debugShowCheckedModeBanner: false, // quita la etiqueta de debug en la esquina superior derecha
       home:LoginOrRegister(), // se le pasa la clase LoginPage que es la pantalla de inicio de sesión
