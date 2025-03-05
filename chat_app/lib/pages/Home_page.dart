@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   void signOut(){ //sign out method
     final authService = Provider.of<AuthService>(context, listen: false);
+    authService.signOut();
   }
   @override
   Widget build(BuildContext context) {

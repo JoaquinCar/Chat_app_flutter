@@ -1,6 +1,10 @@
 import 'package:chat_app/Components/button.dart';
 import 'package:chat_app/Components/text_field.dart';
+import 'package:chat_app/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../services/auth/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onPressed; // función que se ejecuta cuando se presiona el botón
@@ -17,22 +21,31 @@ class _RegisterPageState extends State<RegisterPage> {
   final confirmpasswordController = TextEditingController(); // controlador del campo de texto de confirmar contraseña
 
   //sign up user
-  void signUp() {
-    final email = emailController.text.trim(); // obtiene el texto del controlador de email
-    final password = passwordController.text.trim(); // obtiene el texto del controlador de contraseña
-    final confirmpassword = confirmpasswordController.text.trim(); // obtiene el texto del controlador de confirmar contraseña
+  void signUp() async {
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
+    final confirmpassword = confirmpasswordController.text.trim();
 
-    if (email.isEmpty || password.isEmpty || confirmpassword.isEmpty) { // si el email o la contraseña están vacíos
-      ScaffoldMessenger.of(context).showSnackBar( // muestra un mensaje emergente en la parte inferior de la pantalla
-        const SnackBar(content: Text("Please fill all the fields")), // mensaje emergente
+    if (email.isEmpty || password.isEmpty || confirmpassword.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please fill all the fields")),
       );
-    } else if (password != confirmpassword) { // si la contraseña no coincide con la confirmación de la contraseña
-      ScaffoldMessenger.of(context).showSnackBar( // muestra un mensaje emergente en la parte inferior de la pantalla
-        const SnackBar(content: Text("Passwords do not match")), // mensaje emergente
+    } else if (password != confirmpassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Passwords do not match! Try Again")),
       );
-    } else { // si el email y la contraseña no están vacíos
-      ScaffoldMessenger.of(context).showSnackBar( // muestra un mensaje emergente en la parte inferior de la pantalla
-        const SnackBar(content: Text("User registered successfully")), // mensaje emergente
+      return;
+    }
+
+    final authService = Provider.of<AuthService>(context, listen: false);
+    try {
+      await authService.signUpWithEmailandPassword(email, password);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Sign up successful!")),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
       );
     }
   }
