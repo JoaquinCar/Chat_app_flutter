@@ -1,39 +1,32 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  final TextEditingController controller; // controlador del campo de texto, se utiliza para controlar el texto que se muestra en el campo de texto
-  final String hintText; // texto de ayuda que se muestra en el campo de texto cuando está vacío
-  final bool obscureText; // indica si el texto del campo de texto debe ser oculto
+  final TextEditingController controller;
+  final String hintText;
+  final bool obscureText;
+  final TextStyle hintStyle;
+  final TextStyle textStyle;
 
   const CustomTextField({
-    super.key,
+    Key? key,
     required this.controller,
     required this.hintText,
     required this.obscureText,
-
-  });
+    required this.hintStyle,
+    required this.textStyle,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller, // controlador del campo de texto
-      obscureText: obscureText, // indica si el texto del campo de texto debe ser oculto
-    decoration: InputDecoration( // decoración del campo de texto
-      enabledBorder: OutlineInputBorder( // borde del campo de texto
-        borderSide: BorderSide( // borde del campo de texto
-          color: Colors.grey.shade200,
-        ),
+    return TextField(
+      controller: controller,
+      obscureText: obscureText,
+      style: textStyle,
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: hintStyle,
+        border: const OutlineInputBorder(),
       ),
-      focusedBorder: OutlineInputBorder( // borde del campo de texto cuando está enfocad  o
-        borderSide: BorderSide(
-        ),
-      ),
-              fillColor: Colors.grey[100],
-              filled: true,
-              hintText: hintText,
-              hintStyle: TextStyle(color: Colors.grey),
-
-    ),
     );
   }
 }

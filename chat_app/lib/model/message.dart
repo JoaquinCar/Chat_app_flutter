@@ -1,23 +1,23 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class Message {
   final String senderID;
   final String senderEmail;
-  final String receiverId;
+  final String receiverID;
   final String message;
   final Timestamp timestamp;
+  final String currentUserName;
 
-  Message(this.senderID, this.senderEmail, this.receiverId, this.message, this.timestamp);
+  Message(this.senderID, this.senderEmail, this.receiverID, this.message, this.timestamp, this.currentUserName);
 
   Map<String, dynamic> toMap() {
     return {
-      'senderId': senderID,
+      'senderID': senderID,
       'senderEmail': senderEmail,
-      'receiverID': receiverId,
+      'receiverID': receiverID,
       'message': message,
       'timestamp': timestamp,
+      'currentUserName': currentUserName,
     };
   }
 }
