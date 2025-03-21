@@ -17,13 +17,23 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   final ChatService _chatService = ChatService();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final ScrollController _scrollController = ScrollController();
 
   void sendMessage() async {
     if (_messageController.text.isNotEmpty) {
       await _chatService.sendMessage(
           widget.receiverUserID, _messageController.text);
       _messageController.clear();
+      _scrollToBottom();
     }
+  }
+
+  void _scrollToBottom() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
   }
 
   @override
@@ -31,7 +41,7 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.receiverUserEmail,
-        style: TextStyle(color: Colors.white),),
+          style: TextStyle(color: Colors.white),),
         backgroundColor: Color(0xFFFF4F92),
       ),
       body: Container(
@@ -63,7 +73,9 @@ class _ChatPageState extends State<ChatPage> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Text('Loading...');
         }
+        WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom()); //Scroll_to_the_bottom_of_the_list_when_a_new_message_is_added
         return ListView(
+          controller: _scrollController,
           children: snapshot.data!.docs.map((document) => _buildMessageItem(document)).toList(),
         );
       },
@@ -106,6 +118,7 @@ class _ChatPageState extends State<ChatPage> {
       ),
     );
   }
+
   Widget _buildMessageInput() {
     return Row(
       children: [

@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                   Icon(
                     Icons.message_outlined,
                     size: 85,
-                    color: const Color.fromARGB(255, 97, 160, 212),
+                    color: const Color.fromARGB(255, 255, 255, 250),
                   ),
                   const SizedBox(height: 50),
                   const Text(
