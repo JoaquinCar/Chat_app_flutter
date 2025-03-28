@@ -14,11 +14,11 @@ esta aplicación es completamente adaptativa para Windows, Linux, Mac y disposit
 - **Flutter**: Framework principal para el desarrollo de la app.
 - **Firebase**: Usado para autenticación y base de datos en tiempo real.
 - **Dart**: Lenguaje de programación utilizado en Flutter.  
-- 
+
 ## 🔥 Configuración de Firebase
 La aplicación usa Firebase para autenticación y almacenamiento en la nube.
 
-![Configuración de Firebase](images/firebase.png)
+![Configuración de Firebase](images/firebase.png) 
 
 ## 📸 Vista previa de la aplicación
 A continuación, se muestra una demostración de la app en funcionamiento:
