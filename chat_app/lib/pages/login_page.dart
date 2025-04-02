@@ -18,10 +18,10 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
 
   void signIn() async {
-    final authService = Provider.of<AuthService>(context, listen: false);
+    final authService = Provider.of<AuthService>(context, listen: false); // Proveedor de AuthService para iniciar sesión
     // Lógica de inicio de sesión usando authService
     try {
-      await authService.signInWithEmailAndPassword(emailController.text, passwordController.text);
+      await authService.signInWithEmailAndPassword(emailController.text, passwordController.text); // Iniciar sesión con correo electrónico y contraseña
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
     }

@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
-void main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options:DefaultFirebaseOptions.currentPlatform);
+void main() async{ // metodo principal de la aplicación
+  WidgetsFlutterBinding.ensureInitialized(); // inicializa los widgets de flutter
+  await Firebase.initializeApp(options:DefaultFirebaseOptions.currentPlatform); // inicializa firebase con las opciones por defecto de la plataforma actual
   runApp(
-      ChangeNotifierProvider(
-          create: (context) => AuthService(),
+      ChangeNotifierProvider( // provee el servicio de autenticación a la aplicación
+          create: (context) => AuthService(), //
       child: const MyApp(),
       )
   ); // corre la aplicación, se le pasa la clase principal que es MyApp

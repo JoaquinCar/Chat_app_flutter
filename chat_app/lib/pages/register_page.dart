@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import '../Components/button.dart';
 
 class RegisterPage extends StatefulWidget {
-  final VoidCallback onPressed;
+  final VoidCallback onPressed; // Callback function to navigate to the login page
   const RegisterPage({super.key, required this.onPressed});
 
   @override
@@ -15,7 +15,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController emailController = TextEditingController(); // Text controller for email
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmpasswordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
@@ -37,11 +37,11 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
-    final authService = Provider.of<AuthService>(context, listen: false);
+    final authService = Provider.of<AuthService>(context, listen: false); // Instance of AuthService
     try {
       await authService.signUpWithEmailandPassword(email, password);
-      await FirebaseFirestore.instance.collection('users').doc(authService.currentUser!.uid).set({
-        'uid': authService.currentUser!.uid,
+      await FirebaseFirestore.instance.collection('users').doc(authService.currentUser!.uid).set({ // Store user data in Firestore
+        'uid': authService.currentUser!.uid, // User ID
         'email': email,
         'name': name,
       });

@@ -5,13 +5,13 @@ import 'package:flutter/cupertino.dart';
 
 class AuthService extends ChangeNotifier {
   // Autenticación
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance; // Firebase Auth
 
   // Cloud Firestore
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance; // Firestore
 
   // Getter for current user
-  User? get currentUser => _firebaseAuth.currentUser;
+  User? get currentUser => _firebaseAuth.currentUser; // Current user getter for Firebase Auth
 
   // Sign user in
   Future<UserCredential> signInWithEmailAndPassword(String email, String password) async {
@@ -22,7 +22,7 @@ class AuthService extends ChangeNotifier {
       _firestore.collection('users').doc(userCredential.user!.uid).set({
         'uid': userCredential.user!.uid,
         'email': email,
-      }, SetOptions(merge: true));
+      }, SetOptions(merge: true)); // Merge to avoid overwriting the document if it already exists
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
