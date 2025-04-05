@@ -10,21 +10,24 @@ class LoginOrRegister extends StatefulWidget {
 }
 
 class _LoginOrRegisterState extends State<LoginOrRegister> {
-  //variable para mostrar el login
+  // Variable to show the login screen
   bool showLogin = true;
 
-  //función para cambiar entre login y registro, toggleview cambia el estado de showLogin dependiendo de su valor actual
+  // Function to toggle between login and register screens
   void toggleView() {
-    setState(() {
-      showLogin = !showLogin; //al comparar el valor actual de showLogin con el valor opuesto, se cambia el estado de showLogin
+    setState(() { // Update the state
+      showLogin = !showLogin; // Toggle the value of showLogin
     });
   }
 
   @override
-  Widget build(BuildContext context) {  //con todo esto se crea un widget que muestra la pantalla de inicio de sesión o de registro dependiendo del valor de showLogin
+  Widget build(BuildContext context) {
+    // Build a widget that shows either the login or register screen based on showLogin
     if (showLogin) {
+      // If showLogin is true, show the login screen
       return LoginPage(onTap: toggleView);
     } else {
+      // If showLogin is false, show the register screen
       return RegisterPage(onPressed: toggleView);
     }
   }

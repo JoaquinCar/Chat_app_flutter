@@ -13,8 +13,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // Instance of FirebaseAuth to manage authentication
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  // Function to sign out the user
   void signOut() {
     final authService = Provider.of<AuthService>(context, listen: false);
     authService.signOut();
@@ -22,6 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the current user's email or display 'Unknown User' if not available
     final currentUserEmail = _auth.currentUser?.email ?? 'Unknown User';
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +46,7 @@ class _HomePageState extends State<HomePage> {
             color: Color(0xFFFFFFFF),
           ),
         ],
-        backgroundColor: Color(0xFFFF4F92),
+        backgroundColor: Colors.blue,
       ),
       body: Container(
         padding: const EdgeInsets.all(10),
@@ -59,27 +62,29 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // Function to build the user list
   Widget _buildUserList() {
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('users').snapshots(),
+    return StreamBuilder<QuerySnapshot>( // Listen to the Firestore collection 'users'
+      stream: FirebaseFirestore.instance.collection('users').snapshots(), // Listen to the 'users' collection in Firestore
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Center(child: Text('Error loading users', style: TextStyle(color: Color(0xFFFFFFFF))));
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator()); // Show a loading indicator while waiting for data
         }
         return ListView(
-          children: snapshot.data!.docs.map<Widget>((doc) => _buildUserListItem(doc)).toList(),
+          children: snapshot.data!.docs.map<Widget>((doc) => _buildUserListItem(doc)).toList(), // Convert the list of documents to a list of widgets
         );
       },
     );
   }
 
+  // Function to build each user list item
   Widget _buildUserListItem(DocumentSnapshot document) {
-    Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-
-    String name = data['name'] ?? 'Unknown User';
+    Map<String, dynamic> data = document.data()! as Map<String, dynamic>; // Cast the data to Map<String, dynamic>
+//document is a DocumentSnapshot that contains the data of the user
+    String name = data['name'] ?? 'Unknown User'; // Use a default value if 'name' is null
 
     if (_auth.currentUser?.uid != data['uid']) {
       return Card(
@@ -93,7 +98,7 @@ class _HomePageState extends State<HomePage> {
               context,
               MaterialPageRoute(
                 builder: (context) => ChatPage(
-                  receiverUserEmail: data['email'] ?? 'Unknown Email',
+                  receiverUserEmail: data['email'] ?? 'Unknown Email', // Use the email from the document
                   receiverUserID: data['uid'],
                 ),
               ),

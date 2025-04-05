@@ -14,8 +14,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   // Text controllers
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final emailController = TextEditingController(); // Controlador de texto para el correo electrónico
+  final passwordController = TextEditingController(); // Controlador de texto para la contraseña
 
   void signIn() async {
     final authService = Provider.of<AuthService>(context, listen: false); // Proveedor de AuthService para iniciar sesión

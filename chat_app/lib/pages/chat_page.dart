@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class ChatPage extends StatefulWidget {
   final String receiverUserEmail;
   final String receiverUserID;
+
   const ChatPage({super.key, required this.receiverUserEmail, required this.receiverUserID});
 
   @override
@@ -14,23 +15,32 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  // Controller for the message input field
   final TextEditingController _messageController = TextEditingController();
+  // Instance of ChatService to handle sending messages
   final ChatService _chatService = ChatService();
+  // Instance of FirebaseAuth to get the current user
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  // Controller to manage scrolling in the chat
   final ScrollController _scrollController = ScrollController();
 
+  // Function to send a message
   void sendMessage() async {
+    // Check if the message input is not empty
     if (_messageController.text.isNotEmpty) {
+      // Send the message using ChatService
       await _chatService.sendMessage(
           widget.receiverUserID, _messageController.text);
+      // Clear the message input field
       _messageController.clear();
+      // Scroll to the bottom of the chat
       _scrollToBottom();
     }
   }
 
   void _scrollToBottom() {
     _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
+      _scrollController.position.maxScrollExtent, //maxScrollExtent is the maximum scroll extent of the ScrollController
       duration: Duration(milliseconds: 300),
       curve: Curves.easeOut,
     );
@@ -40,7 +50,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.receiverUserEmail,
+        title: Text(widget.receiverUserEmail, // Set the title to the receiver's email
           style: TextStyle(color: Colors.white),),
         backgroundColor: Color(0xFFFF4F92),
       ),
@@ -76,7 +86,7 @@ class _ChatPageState extends State<ChatPage> {
         WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom()); //Scroll_to_the_bottom_of_the_list_when_a_new_message_is_added
         return ListView(
           controller: _scrollController,
-          children: snapshot.data!.docs.map((document) => _buildMessageItem(document)).toList(),
+          children: snapshot.data!.docs.map((document) => _buildMessageItem(document)).toList(), // Convert the list of documents to a list of widgets
         );
       },
     );
@@ -99,7 +109,7 @@ class _ChatPageState extends State<ChatPage> {
           children: [
             if (!isCurrentUser)
               Text(
-                data['senderName'] ?? '',
+                data['senderName'] ?? '', // Display sender's name
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ),
             Container(
